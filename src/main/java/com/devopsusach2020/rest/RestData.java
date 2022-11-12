@@ -34,7 +34,7 @@ ResponseEntity<String> call= restTemplate.getForEntity("https://api.covid19api.c
 	int death = 0; 
 	int recovered = 0;
 	Gson gson = new Gson(); 
-	Pais[] estados = gson. fromJson(call.getBody().toLowerCase(), Pais[].class);
+	Pais[] estados = gson. fromJson(call.getBody().toLowerCase(), Pais[].class); 
 
 for(Pais estado : estados) {
 	response.setDate(estado.getDate()); 
