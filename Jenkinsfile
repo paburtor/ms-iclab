@@ -4,7 +4,7 @@ pipeline {
         stage('Build'){
             steps{
                 echo 'Building...'
-                slackSend color: "warning", message: "Building..."
+                slackSend color: "warning", message: "Building... branch: ${GIT_BRANCH}"
                 sh './mvnw clean compile -e'
 
             }
