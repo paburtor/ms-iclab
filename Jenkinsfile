@@ -13,7 +13,7 @@ pipeline {
     }
         
     stages {
-        
+       /* 
         stage('Checkout SCM')
         {
             steps{
@@ -26,7 +26,7 @@ pipeline {
                 userRemoteConfigs: scm.userRemoteConfigs,
              ])
             }
-        }
+        } */
             
         stage('INFO')
         {
