@@ -14,7 +14,7 @@ pipeline {
         stage('INFO')
         {
             steps{
-                echo 'Info...........'
+                echo 'Info..............'
                 sh 'printenv'
                 //echo "Nombre tag: $TAG_NAME"
                 //cleanWs()
