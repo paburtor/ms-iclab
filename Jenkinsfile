@@ -34,8 +34,6 @@ pipeline {
                 //sh 'printenv'
                 //sh(script: 'git describe', returnStdout: true)
                 echo sh(script: 'env|sort', returnStdout: true)
-                tagBuild=sh(script: 'git describe --tags --abbrev=0', returnStdout: true)
-                echo "El tag del Build es: ${tagBuild}"
 
                 //echo "Nombre tag: $TAG_NAME"
                 //cleanWs()
@@ -59,11 +57,13 @@ pipeline {
             steps
             {
                 script
-                {                    
-                    gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()                     
-                    echo gitTag
-                    
-                    sh() 
+                {              
+                    tagBuild=sh(script: 'git describe --tags --abbrev=0', returnStdout: true)
+                    echo "El tag del Build es: ${tagBuild}"
+
+                    //gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()                     
+                    //echo gitTag
+                                        
                     /*                    
                     if(params.Tool == 'gradle') 
                     {
