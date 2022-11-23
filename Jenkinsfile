@@ -4,6 +4,7 @@ def tagBuild
 
 pipeline {
     agent any
+    options { skipDefaultCheckout() } 
     
      parameters 
     {        
