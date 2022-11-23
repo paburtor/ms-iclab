@@ -60,7 +60,7 @@ pipeline {
                 script
                 {              
                     //tagBuild=sh(script: 'git describe --tags --abbrev=0', returnStdout: true)
-                    tagBuild=sh(script: 'git describe $GIT_COMMIT', returnStdout: true)                                        
+                    tagBuild=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)                                        
                     echo "El tag del Build es: ${tagBuild}"
 
                     //gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()                     
