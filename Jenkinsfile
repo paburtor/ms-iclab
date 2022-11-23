@@ -39,7 +39,8 @@ pipeline {
             {
                 script
                 {                    
-                    sh(returnStdout: true, script: "git tag --contains | head -1").trim()                     
+                    gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()                     
+                    echo gitTag
                     /*                    
                     if(params.Tool == 'gradle') 
                     {
