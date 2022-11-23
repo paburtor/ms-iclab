@@ -13,7 +13,7 @@ pipeline {
     }
         
     stages {
-       /* 
+       
         stage('Checkout SCM')
         {
             steps{
@@ -22,11 +22,11 @@ pipeline {
                 $class: 'GitSCM',
                 branches: scm.branches,
                 doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
-                extensions: [[$class: 'CloneOption', noTags: false, shallow: false, depth: 0, reference: '']],
+                extensions: [[$class: 'CloneOption', noTags: true, shallow: false, depth: 0, reference: '']],
                 userRemoteConfigs: scm.userRemoteConfigs,
              ])
             }
-        } */
+        }
             
         stage('INFO')
         {
