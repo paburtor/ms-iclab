@@ -14,7 +14,7 @@ pipeline {
         stage('INFO')
         {
             steps{
-                echo 'Info..............'
+                echo 'Info..............'                
                 sh 'printenv'
                 //echo "Nombre tag: $TAG_NAME"
                 //cleanWs()
@@ -32,13 +32,15 @@ pipeline {
             }
         }
         
-/*      
+      
         stage('Build')
         {
             steps
             {
                 script
-                {
+                {                    
+                    sh(returnStdout: true, script: "git tag --contains | head -1").trim()                     
+                    /*                    
                     if(params.Tool == 'gradle') 
                     {
                         echo 'Invocando script gradle.groovy'
@@ -51,6 +53,7 @@ pipeline {
                         myscript = load 'maven.groovy'                        
                         myscript.call()   
                     }
+                    */
                 }                                 
             }
             post {
@@ -63,6 +66,6 @@ pipeline {
                     //slackSend color: "danger", message: "Build Failed"
                 }
             }
-        }  */      
+        }     
     }
 }
