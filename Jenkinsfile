@@ -15,7 +15,8 @@ pipeline {
         {
             steps{
                 echo 'Info..............'                
-                sh 'printenv'
+                //sh 'printenv'
+                echo sh(script: 'env|sort', returnStdout: true)
                 //echo "Nombre tag: $TAG_NAME"
                 //cleanWs()
                 //slackSend color: "warning", message: "INFO: Prueba Taller 3 - Modulo 4 Branch: ${GIT_BRANCH}"
