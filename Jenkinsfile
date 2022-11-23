@@ -22,7 +22,7 @@ pipeline {
                 $class: 'GitSCM',
                 branches: scm.branches,
                 doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
-                extensions: [[$class: 'CloneOption', noTags: true, shallow: false, depth: 0, reference: '']],
+                extensions: [[$class: 'CloneOption', noTags: false, shallow: false, depth: 0, reference: '']],
                 userRemoteConfigs: scm.userRemoteConfigs,
              ])
             }
@@ -59,7 +59,8 @@ pipeline {
             {
                 script
                 {              
-                    tagBuild=sh(script: 'git describe --tags --abbrev=0', returnStdout: true)
+                    //tagBuild=sh(script: 'git describe --tags --abbrev=0', returnStdout: true)
+                    tagBuild=sh(script: 'git describe $GIT_COMMIT', returnStdout: true)                                        
                     echo "El tag del Build es: ${tagBuild}"
 
                     //gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()                     
