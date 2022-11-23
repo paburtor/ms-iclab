@@ -16,6 +16,7 @@ pipeline {
             steps{
                 echo 'Info..............'                
                 //sh 'printenv'
+                sh(script: 'git describe', returnStdout: true)
                 echo sh(script: 'env|sort', returnStdout: true)
                 //echo "Nombre tag: $TAG_NAME"
                 //cleanWs()
