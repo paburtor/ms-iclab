@@ -33,6 +33,8 @@ pipeline {
                 //sh 'printenv'
                 //sh(script: 'git describe', returnStdout: true)
                 echo sh(script: 'env|sort', returnStdout: true)
+                echo sh(script: 'git describe --tags --abbrev=0', returnStdout: true)
+
                 //echo "Nombre tag: $TAG_NAME"
                 //cleanWs()
                 //slackSend color: "warning", message: "INFO: Prueba Taller 3 - Modulo 4 Branch: ${GIT_BRANCH}"
