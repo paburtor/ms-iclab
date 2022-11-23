@@ -12,7 +12,7 @@ pipeline {
         
     stages {
         
-        stage('Config tags')
+        stage('Checkout SCM')
         {
             steps{
                 
@@ -58,6 +58,8 @@ pipeline {
                 {                    
                     gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()                     
                     echo gitTag
+                    
+                    sh() 
                     /*                    
                     if(params.Tool == 'gradle') 
                     {
