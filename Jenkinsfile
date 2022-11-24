@@ -70,7 +70,7 @@ pipeline {
                     
                     sh(script: 'git switch main', returnStdout: true)
                     commentBuild=sh(script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true)                    
-                    sh(script: 'git switch ${currentBranch}', returnStdout: true)
+                    sh(script: 'git switch $currentBranch', returnStdout: true)
                     echo "El comment del main es: ${commentBuild}"
                     
                     
