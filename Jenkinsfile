@@ -64,6 +64,16 @@ pipeline {
                     echo "El tag del Build es: ${tagBuild}"
                     commentBuild=sh(script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true)
                     echo "El comment del Build es: ${commentBuild}"
+                    
+                    
+                    sh(script: 'git switch main', returnStdout: true)
+                    commentBuild=sh(script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true)
+                    sh(script: 'git switch ${GIT_BRANCH}', returnStdout: true)
+                    echo "El comment del main es: ${commentBuild}"
+                    
+                    
+                    
+                    
                     //echo "El comentario fue : ${GIT_COMMIT_MSG}"
 
                     //gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()                     
