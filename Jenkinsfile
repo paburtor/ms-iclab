@@ -65,10 +65,12 @@ pipeline {
                     commentBuild=sh(script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true)
                     echo "El comment del Build es: ${commentBuild}"
                     
+                    currentBranch=sh(script: 'git branch --show-current', returnStdout: true)
+                    echo "Current branch: ${currentBranch}"                                       
                     
                     sh(script: 'git switch main', returnStdout: true)
-                    commentBuild=sh(script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true)
-                    sh(script: 'git switch ${GIT_BRANCH}', returnStdout: true)
+                    commentBuild=sh(script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true)                    
+                    sh(script: 'git switch ${currentBranch}', returnStdout: true)
                     echo "El comment del main es: ${commentBuild}"
                     
                     
