@@ -62,8 +62,9 @@ pipeline {
                     //tagBuild=sh(script: 'git describe --tags --abbrev=0', returnStdout: true)
                     tagBuild=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)                                        
                     echo "El tag del Build es: ${tagBuild}"
-                    commentBuild=sh(script: 'git log show last 1 commits', returnStdout: true)
+                    commentBuild=sh(script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true)
                     echo "El comment del Build es: ${commentBuild}"
+                    //echo "El comentario fue : ${GIT_COMMIT_MSG}"
 
                     //gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()                     
                     //echo gitTag
