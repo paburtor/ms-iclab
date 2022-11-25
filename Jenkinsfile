@@ -23,7 +23,7 @@ pipeline {
         stage("Build"){
             when { anyOf { branch 'feature-*'; branch 'main' } }
             steps {
-                slackSend color: "good", message: "Building... branch: "+env.BRANCH_NAME
+                slackSend color: "good", message: "Building.. branch: "+env.BRANCH_NAME
             }
                 // echo env.BRANCH_NAME
                 // echo 'If Condition...'
