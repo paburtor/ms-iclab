@@ -1,3 +1,5 @@
+def pipelineType
+
 pipeline {
     agent any
     tools {
@@ -13,7 +15,6 @@ pipeline {
         projectname = sh(script: 'git remote get-url origin | cut -d "/" -f5', returnStdout: true)
         commiteremail = sh(returnStdout: true, script: 'git log --pretty=%ae HEAD -n1')
         jenkinsurl = sh(script: 'echo "${BUILD_URL}"' , returnStdout: true).trim()
-        ciOcd = ""
     }
     //[Grupo2][Pipeline IC/CD][Rama: develop][Stage: build][Resultado: Éxito/Success].
     //[Grupo2][Pipeline IC/CD][Rama: re-v1-0-0][Stage: test][Resultado: Error/Fail].
@@ -23,9 +24,9 @@ pipeline {
                 sh "printenv"
                 script {
                     if(env.BRANCH_NAME == 'main'){
-                        env.ciOcd = "Pipeline CD"
+                        pipelineType = "Pipeline CD"
                     }else{
-                        env.ciOcd = "Pipeline CI"
+                        pipelineType = "Pipeline CI"
                     }
                 }
             }
@@ -38,10 +39,10 @@ pipeline {
             }
             post{
                 success{
-                    slackSend color: "good", message: "Grupo 3 - " + env.ciOcd + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success."
+                    slackSend color: "good", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success."
                 }
                 failure {
-                    slackSend color: "danger", message: "Grupo 3 - " + env.ciOcd + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success."
+                    slackSend color: "danger", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success."
 
                 }
             }
