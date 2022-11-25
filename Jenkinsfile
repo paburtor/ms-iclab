@@ -20,10 +20,10 @@ pipeline {
                 sh "printenv"
             }
         }
-        // stage("when main"){
-        //     steps {
-        //         echo ${BRANCH_NAME}
-        //     }
-        // }
+        stage("when main"){
+            steps {
+                echo ${env.BRANCH_NAME}
+            }
+        }
     }
 }
