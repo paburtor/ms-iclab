@@ -15,15 +15,15 @@ pipeline {
         jenkinsurl = sh(script: 'echo "${BUILD_URL}"' , returnStdout: true).trim()
     }
     stages {
-        // stage("Env Variables") {
-        //     steps {
-        //         sh "printenv"
-        //     }
-        // }
-        stage("when main"){
+        stage("Env Variables") {
             steps {
-                echo ${BRANCH_NAME}
+                sh "printenv"
             }
         }
+        // stage("when main"){
+        //     steps {
+        //         echo ${BRANCH_NAME}
+        //     }
+        // }
     }
 }
