@@ -1,74 +1,28 @@
 pipeline {
     agent any
+    tools {
+        maven 'maven'
+    }
+    environment{
+        commitId = sh(returnStdout: true, script: 'git rev-parse HEAD')
+        commitcheck = sh(returnStdout: true, script: '[ "$CHANGE_BRANCH" = "" ] || git rev-parse origin/$CHANGE_BRANCH')
+        result = sh(returnStdout: true, script: 'git log --format=%B HEAD -n1')
+        author = sh(returnStdout: true, script: 'git log --pretty=%an HEAD -n1')
+        GIT_COMMIT_USERNAME = sh (script: 'git show -s --pretty=%an', returnStdout: true ).trim()
+        commitmsg = sh(returnStdout: true, script: 'git log --oneline -n 1 HEAD')
+        projectname = sh(script: 'git remote get-url origin | cut -d "/" -f5', returnStdout: true)
+        commiteremail = sh(returnStdout: true, script: 'git log --pretty=%ae HEAD -n1')
+        jenkinsurl = sh(script: 'echo "${BUILD_URL}"' , returnStdout: true).trim()
+    }
     stages {
-        stage('Build'){
-            steps{
-                echo 'Building...'
-                slackSend color: "warning", message: "Building... branch: ${GIT_BRANCH}"
-                sh './mvnw clean compile -e'
-
-            }
-            post {
-                success {
-                    echo 'Build Success'
-                    slackSend color: "good", message: "Build Success"
-                }
-                failure {
-                    echo 'Build Failed'
-                    slackSend color: "danger", message: "Build Failed"
-                }
-            }
-        }
-        stage('Test'){
-            steps{
-                echo 'Testing...'
-                slackSend color: "warning", message: "Testing..."
-                sh './mvnw test -e'
-            }
-            post {
-                success {
-                    echo 'Test Success'
-                    slackSend color: "good", message: "Test Success"
-                }
-                failure {
-                    echo 'Test Failed'
-                    slackSend color: "danger", message: "Test Failed"
-                }
-            }
-        }
-        stage('Package'){
-            steps{
-                echo 'Packaging...'
-                slackSend color: "warning", message: "Packaging..."
-                sh './mvnw package -e'
-            }
-            post {
-                success {
-                    echo 'Package Success'
-                    slackSend color: "good", message: "Package Success"
-                }
-                failure {
-                    echo 'Package Failed'
-                    slackSend color: "danger", message: "Package Failed"
-                }
-            }
-        }
-        stage('Run'){
-            steps{
-                echo 'Running...'
-                slackSend color: "warning", message: "Running..."
-                sh '#./mvnw spring-boot:run -e'
-            }
-            post {
-                success {
-                    echo 'Run Success'
-                    slackSend color: "good", message: "Run Success"   
-                    cleanWs()                 
-                }
-                failure {
-                    echo 'Run Failed'
-                    slackSend color: "danger", message: "Run Failed"
-                }
+        // stage("Env Variables") {
+        //     steps {
+        //         sh "printenv"
+        //     }
+        // }
+        stage("when main"){
+            steps {
+                echo ${BRANCH_NAME}
             }
         }
     }
