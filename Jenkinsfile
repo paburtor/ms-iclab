@@ -23,9 +23,9 @@ pipeline {
                 sh "printenv"
                 script {
                     if(env.BRANCH_NAME == 'main'){
-                        ciOcd = "Pipeline CD"
+                        env.ciOcd = "Pipeline CD"
                     }else{
-                        ciOcd = "Pipeline CI"
+                        env.ciOcd = "Pipeline CI"
                     }
                 }
             }
