@@ -1,8 +1,8 @@
 def pipelineType
 
 def mns(pipeline,branch,stagename,status){
-    def mensaje = "Grupo 3 - " + pipeline + " - Rama : " + branch + " - Stage : " + stagename + " - " + status
-    return mensaje
+    return mensaje = "Grupo 3 - " + pipeline + " - Rama : " + branch + " - Stage : " + stagename + " - " + status
+    
 }
 
 pipeline {
