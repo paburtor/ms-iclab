@@ -13,7 +13,7 @@ pipeline {
         projectname = sh(script: 'git remote get-url origin | cut -d "/" -f5', returnStdout: true)
         commiteremail = sh(returnStdout: true, script: 'git log --pretty=%ae HEAD -n1')
         jenkinsurl = sh(script: 'echo "${BUILD_URL}"' , returnStdout: true).trim()
-        ciOcd
+        ciOcd = ""
     }
     //[Grupo2][Pipeline IC/CD][Rama: develop][Stage: build][Resultado: Éxito/Success].
     //[Grupo2][Pipeline IC/CD][Rama: re-v1-0-0][Stage: test][Resultado: Error/Fail].
