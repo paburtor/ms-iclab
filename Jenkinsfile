@@ -13,6 +13,7 @@ pipeline {
         projectname = sh(script: 'git remote get-url origin | cut -d "/" -f5', returnStdout: true)
         commiteremail = sh(returnStdout: true, script: 'git log --pretty=%ae HEAD -n1')
         jenkinsurl = sh(script: 'echo "${BUILD_URL}"' , returnStdout: true).trim()
+        ciOcd
     }
     //[Grupo2][Pipeline IC/CD][Rama: develop][Stage: build][Resultado: Éxito/Success].
     //[Grupo2][Pipeline IC/CD][Rama: re-v1-0-0][Stage: test][Resultado: Error/Fail].
@@ -20,20 +21,30 @@ pipeline {
         stage("Env Variables") {
             steps {
                 sh "printenv"
+                script {
+                    if(env.BRANCH_NAME == 'main'){
+                        ciOcd = "Pipeline CD"
+                    }else{
+                        ciOcd = "Pipeline CI"
+                    }
+                }
             }
         }
         stage("Build"){
             when { anyOf { branch 'feature-*'; branch 'main' } }
             steps {
+                sh './mvnw clean compile -e'
                 slackSend color: "good", message: "Building.. branch: "+env.BRANCH_NAME
             }
             post{
                 success{
-                    slackSend color: "good", message: "Grupo 3 - [Pipeline IC/CD] - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success."
+                    slackSend color: "good", message: "Grupo 3 - " + env.ciOcd + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success."
+                }
+                failure {
+                    slackSend color: "danger", message: "Grupo 3 - " + env.ciOcd + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success."
+
                 }
             }
-                // echo env.BRANCH_NAME
-                // echo 'If Condition...'
         }
     }
 }
