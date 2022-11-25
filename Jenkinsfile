@@ -1,5 +1,10 @@
 def pipelineType
 
+def mns(pipeline,branch,stagename,status){
+    def mensaje = "Grupo 3 - " + pipeline + " - Rama : " + branch + " - Stage : " + stagename + " - " + status
+    return mensaje
+}
+
 pipeline {
     agent any
     tools {
@@ -35,14 +40,16 @@ pipeline {
             when { anyOf { branch 'feature-*'; branch 'main' } }
             steps {
                 sh './mvnw clean compile -e'
-                slackSend color: "good", message: "Building.. branch: "+env.BRANCH_NAME
+                // slackSend color: "good", message: "Building.. branch: "+env.BRANCH_NAME
             }
             post{
                 success{
-                    slackSend color: "good", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success."
+                    def mensaje = mns(pipelineType,env.BRANCH_NAME,env.STAGE_NAME,'Success')
+                    slackSend color: "good", message: mensaje
                 }
                 failure {
-                    slackSend color: "danger", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success."
+                    def mensaje = mns(pipelineType,env.BRANCH_NAME,env.STAGE_NAME,'Fail')
+                    slackSend color: "danger", message: mensaje
 
                 }
             }
