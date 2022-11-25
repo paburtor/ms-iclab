@@ -29,7 +29,7 @@ pipeline {
             }
             post{
                 success{
-                    slackSend color: "good", message: "Grupo 3 - [Pipeline IC/CD] - Rama : " + env.BRANC_NAME + " - Stage : " + env.STAGE_NAME + " Success."
+                    slackSend color: "good", message: "Grupo 3 - [Pipeline IC/CD] - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success."
                 }
             }
                 // echo env.BRANCH_NAME
