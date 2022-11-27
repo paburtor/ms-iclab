@@ -105,16 +105,20 @@ pipeline {
             when { anyOf { branch 'feature-*'; branch 'main' } }
             steps {
                 script {
-                    lasttag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags')
+                    try {
+                        lasttag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags')
+                    }catch(Exception e){
+                        lasttag = "0.0.0"
+                    }
                     echo "lasttag: "+lasttag
-                    lasttag = lasttag.trim()
-                    echo "lasttag: "+lasttag
-                    lasttag = lasttag.substring(1)
-                    echo "lasttag: "+lasttag
-                    lasttag = lasttag.split("\\.")
-                    echo "lasttag: "+lasttag
-                    lasttag = lasttag[0]+"."+lasttag[1]+"."+(lasttag[2].toInteger()+1)
-                    echo "lasttag: "+lasttag
+                    // lasttag = lasttag.trim()
+                    // echo "lasttag: "+lasttag
+                    // lasttag = lasttag.substring(1)
+                    // echo "lasttag: "+lasttag
+                    // lasttag = lasttag.split("\\.")
+                    // echo "lasttag: "+lasttag
+                    // lasttag = lasttag[0]+"."+lasttag[1]+"."+(lasttag[2].toInteger()+1)
+                    // echo "lasttag: "+lasttag
                 }
             }
 
