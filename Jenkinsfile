@@ -30,7 +30,7 @@ pipeline {
                 script
                 {
                     tagCommit=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)
-                    comment=sh(script: 'git log --format=%B -n 1', returnStdout: true)
+                    comment=sh(script: 'git log --format=%B -n 1 $GIT_COMMIT', returnStdout: true)
                     
                     echo tagCommit
                     echo "El comentario del commit fue: $comment"
@@ -38,15 +38,15 @@ pipeline {
                                                            
                     if(comment.startsWith('Patch')) 
                     {                        
-                        echo "Commit Patch : $comment...."
+                        echo "Commit Patch -> ($comment)"
                     }
                     else if (comment.startsWith("Minor"))
                     {
-                        echo "Commit Minor : $comment...."                        
+                        echo "Commit Minor -> ($comment)"                        
                     }
                     else if (comment.startsWith("Major"))
                     {
-                        echo "Commit Major : $comment...."                        
+                        echo "Commit Major -> ($comment)"                        
                     }
                     else
                     {
