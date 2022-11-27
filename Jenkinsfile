@@ -38,15 +38,15 @@ pipeline {
                                                            
                     if(comment.startsWith('Patch')) 
                     {                        
-                        echo 'Commit Patch $comment....'
+                        echo "Commit Patch : $comment...."
                     }
                     else if (comment.startsWith("Minor"))
                     {
-                        echo 'Commit Minor $comment....'                        
+                        echo "Commit Minor : $comment...."                        
                     }
                     else if (comment.startsWith("Major"))
                     {
-                        echo 'Commit Major $comment....'                        
+                        echo "Commit Major : $comment...."                        
                     }
                     else
                     {
