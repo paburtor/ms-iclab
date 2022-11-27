@@ -33,8 +33,6 @@ pipeline {
                     if(tagCommit.startsWith("Patch")) 
                     {
                         echo 'Commit Patch ($tagCommit)....'
-                        //myscript = load 'gradle.groovy'                                            
-                        //myscript.call()   
                     }
                     else if (tagCommit.startsWith("Minor"))
                     {
@@ -51,7 +49,7 @@ pipeline {
                 }                                                                  
             }
         }
-                           
+/*                           
         stage('INFO')
         {
             steps{
@@ -75,8 +73,8 @@ pipeline {
                 }
             }
         }
-        
-      
+*/        
+/*      
         stage('Build')
         {
             steps
@@ -101,8 +99,7 @@ pipeline {
 
                     //gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()                     
                     //echo gitTag
-                                        
-                    /*                    
+                                                                               
                     if(params.Tool == 'gradle') 
                     {
                         echo 'Invocando script gradle.groovy'
@@ -114,8 +111,7 @@ pipeline {
                         echo 'Invocando script maven.groovy'
                         myscript = load 'maven.groovy'                        
                         myscript.call()   
-                    }
-                    */
+                    }                    
                 }                                 
             }
             post {
@@ -128,6 +124,7 @@ pipeline {
                     //slackSend color: "danger", message: "Build Failed"
                 }
             }
-        }     
+        }
+*/
     }
 }
