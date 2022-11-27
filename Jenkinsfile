@@ -1,7 +1,7 @@
 def responseStatus = ''
 def myscript
 def tagCommit
-def commentCommit
+def comment
 
 pipeline {
     agent any
@@ -30,29 +30,27 @@ pipeline {
                 script
                 {
                     tagCommit=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)
-                    commentCommit=sh(script: 'git log --format=%B -n 1', returnStdout: true)
+                    comment=sh(script: 'git log --format=%B -n 1', returnStdout: true)
                     
                     echo tagCommit
-                    echo commentCommit
+                    echo "El comentario del commit fue: $comment"
                     //echo 'El tag de commit fue : $tagCommit'
-                    
-                    echo commentCommit.startsWith('Patch');
-                    
-                    if(commentCommit.startsWith('Patch')) 
+                                                           
+                    if(comment.startsWith('Patch')) 
                     {                        
-                        echo 'Commit Patch ($commentCommit)....'
+                        echo 'Commit Patch $comment....'
                     }
-                    else if (commentCommit.startsWith("Minor"))
+                    else if (comment.startsWith("Minor"))
                     {
-                        echo 'Commit Minor ($commentCommit)....'                        
+                        echo 'Commit Minor $comment....'                        
                     }
-                    else if (commentCommit.startsWith("Major"))
+                    else if (comment.startsWith("Major"))
                     {
-                        echo 'Commit Major ($commentCommit)....'                        
+                        echo 'Commit Major $comment....'                        
                     }
                     else
                     {
-                        echo 'Error Git Comment ($commentCommit)....'                        
+                        echo 'Error Git Comment....'                        
                         //throw new Exception("Error Git Comment ($tagCommit)")                                      
                     }    
                 }                                                                  
