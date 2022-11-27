@@ -1,6 +1,7 @@
 def responseStatus = ''
 def myscript
 def tagCommit
+def commentCommit
 
 pipeline {
     agent any
@@ -29,7 +30,10 @@ pipeline {
                 script
                 {
                     tagCommit=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)
+                    commentCommit=sh(script: 'git log -1', returnStdout: true)
+                    
                     echo tagCommit
+                    echo commentCommit
                     //echo 'El tag de commit fue : $tagCommit'
                     
                     echo tagCommit.startsWith('Patch');
