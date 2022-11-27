@@ -29,9 +29,12 @@ pipeline {
             {                                
                 script
                 {
-                    //tagCommit=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)
-                    echo "Hash commit : $GIT_COMMIT"
-                    comment=sh(script: 'git log --format=%B -n 1 $GIT_COMMIT', returnStdout: true)
+                    //tagCommit=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)                    
+                    commit=sh(script: 'git log -1 --format=format:"%H"', returnStdout: true)
+                    comment=sh(script: 'git log --format=%B -n 1 $commit', returnStdout: true)
+                    
+                    echo "Commit : $commit"
+                    echo "Comment : $comment"                    
                     
                     //echo tagCommit
                     //echo "El comentario del commit fue: $comment"
