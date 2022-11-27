@@ -44,7 +44,7 @@ pipeline {
                     {                        
                         echo "Commit Patch -> ($comment)"
                     }
-                    else if (comment.startsWith("Minor"))
+                    if(comment.startsWith('Minor:') || comment.startsWith('Minor :')) 
                     {
                         echo "Commit Minor -> ($comment)"                        
                     }
