@@ -1,17 +1,11 @@
 def responseStatus = ''
 def myscript
-def tagBuild
+def tagCommit
 
 pipeline {
     agent any
     options { skipDefaultCheckout() } 
-    
-     parameters 
-    {        
-        choice(name: "Tool", choices: ["gradle", "maven"], description: "Seleccione la herramienta de construcción")
-        booleanParam(name: "upload", defaultValue: true, description: "¿Actualizar repositorio Nexus?")
-    }
-        
+            
     stages {
        
         stage('Checkout SCM')
@@ -27,7 +21,37 @@ pipeline {
              ])
             }
         }
-            
+        
+        stage('Check Commit comments')
+        {
+            steps
+            {                                
+                script
+                {
+                    tagCommit=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)
+                    
+                    if(tagCommit.startsWith("Patch")) 
+                    {
+                        echo 'Commit Patch ($tagCommit)....'
+                        //myscript = load 'gradle.groovy'                                            
+                        //myscript.call()   
+                    }
+                    else if (tagCommit.startsWith("Minor"))
+                    {
+                        echo 'Commit Minor ($tagCommit)....'                        
+                    }
+                    else if (tagCommit.startsWith("Major"))
+                    {
+                        echo 'Commit Major ($tagCommit)....'                        
+                    }
+                    else
+                    {
+                        throw new Exception("Error Git Comment ($tagCommit)")                                      
+                    }    
+                }                                                                  
+            }
+        }
+                           
         stage('INFO')
         {
             steps{
@@ -60,22 +84,19 @@ pipeline {
                 script
                 {              
                     //tagBuild=sh(script: 'git describe --tags --abbrev=0', returnStdout: true)
-                    tagBuild=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)                                        
-                    echo "El tag del Build es: ${tagBuild}"
-                    commentBuild=sh(script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true)
-                    echo "El comment del Build es: ${commentBuild}"
+                    //tagBuild=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)                                        
+                    //echo "El tag del Build es: ${tagBuild}"
+                    //commentBuild=sh(script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true)
+                    //echo "El comment del Build es: ${commentBuild}"
                     
-                    currentBranch=sh(script: 'git branch --show-current', returnStdout: true)
-                    echo "Current branch: ${currentBranch}"                                       
+                    //currentBranch=sh(script: 'git branch --show-current', returnStdout: true)
+                    //echo "Current branch: ${currentBranch}"                                       
                     
-                    sh(script: 'git switch main', returnStdout: true)
-                    commentBuild=sh(script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true)                    
-                    sh(script: 'git switch $currentBranch', returnStdout: true)
-                    echo "El comment del main es: ${commentBuild}"
-                    
-                    
-                    
-                    
+                    //sh(script: 'git switch main', returnStdout: true)
+                    //commentBuild=sh(script: 'git log -1 --pretty=%B ${GIT_COMMIT}', returnStdout: true)                    
+                    //sh(script: 'git switch $currentBranch', returnStdout: true)
+                    //echo "El comment del main es: ${commentBuild}"
+                                                                               
                     //echo "El comentario fue : ${GIT_COMMIT_MSG}"
 
                     //gitTag=sh(returnStdout: true, script: "git tag --contains | head -1").trim()                     
@@ -99,11 +120,11 @@ pipeline {
             }
             post {
                 success {
-                    echo 'Build Success ' + params.Tool
+                    //echo 'Build Success ' + params.Tool
                     //slackSend color: "good", message: "Build Success"
                 }
                 failure {
-                    echo 'Build Failed ' + params.Tool
+                    //echo 'Build Failed ' + params.Tool
                     //slackSend color: "danger", message: "Build Failed"
                 }
             }
