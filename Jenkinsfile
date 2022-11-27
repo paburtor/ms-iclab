@@ -29,11 +29,12 @@ pipeline {
             {                                
                 script
                 {
-                    tagCommit=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)
+                    //tagCommit=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)
+                    echo "Hash commit : $GIT_COMMIT"
                     comment=sh(script: 'git log --format=%B -n 1 $GIT_COMMIT', returnStdout: true)
                     
-                    echo tagCommit
-                    echo "El comentario del commit fue: $comment"
+                    //echo tagCommit
+                    //echo "El comentario del commit fue: $comment"
                     //echo 'El tag de commit fue : $tagCommit'
                                                            
                     if(comment.startsWith('Patch')) 
