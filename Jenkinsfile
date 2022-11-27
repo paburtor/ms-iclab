@@ -1,10 +1,4 @@
 def pipelineType
-def mensaje
-
-def mns(pipeline,branch,stagename,status){
-    return 
-    
-}
 
 pipeline {
     agent any
@@ -27,6 +21,7 @@ pipeline {
     stages {
         stage("Env Variables") {
             steps {
+                cleanWs()
                 sh "printenv"
                 script {
                     if(env.BRANCH_NAME == 'main'){
@@ -108,7 +103,7 @@ pipeline {
                     try {
                         lasttag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags')
                     }catch(Exception e){
-                        lasttag = "0.0.0"
+                        lasttag = "v0.0.0"
                     }
                     echo "lasttag: "+lasttag
                     echo "mensaje commit : "+env.commitmsg
