@@ -135,7 +135,13 @@ pipeline {
                     echo "lasttag: "+lasttag
                     //crear nuevo tag en repo
                     sh "git tag -a v"+lasttag+" -m 'v"+lasttag+"'"
+                    //login github
+                    sh "git config --global user.email '
+                    sh "git config --global user.name 'Grupo 3'"
+                    //push tag
                     sh "git push origin v"+lasttag
+                    
+                    // sh "git push origin v"+lasttag
                     //actualizar version en pom.xml
                     // sh "mvn versions:set -DnewVersion="+lasttag+" -DgenerateBackupPoms=false"
                     // //subir cambios a repo
