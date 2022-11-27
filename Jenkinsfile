@@ -29,6 +29,7 @@ pipeline {
                 script
                 {
                     tagCommit=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)
+                    echo 'El tag de commit fue : $(tagCommit)'
                     
                     if(tagCommit.startsWith("Patch")) 
                     {
