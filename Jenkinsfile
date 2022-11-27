@@ -141,7 +141,7 @@ pipeline {
                         passwordVariable: 'PASSWORD', 
                         usernameVariable: 'USERNAME')
                         ]) {
-                        sh "git push --tags ${USERNAME}:${PASSWORD}@${env.GIT_URL}"
+                        sh "git push --tags"
                     }
                     // sh "git config --global user.email 'danilovidalm@gmail.com'"
                     // sh "git config --global user.name 'Grupo 3'"
