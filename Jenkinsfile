@@ -19,13 +19,13 @@ pipeline {
     //[Grupo2][Pipeline IC/CD][Rama: develop][Stage: build][Resultado: Éxito/Success].
     //[Grupo2][Pipeline IC/CD][Rama: re-v1-0-0][Stage: test][Resultado: Error/Fail].
     stages {
-        stage('Checkout') {
-            steps {
-                cleanWs()
-                checkout scm
-            }
-            // checkout scm
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         cleanWs()
+        //         checkout scm
+        //     }
+        //     // checkout scm
+        // }
         stage("Env Variables") {
             steps {
                 
