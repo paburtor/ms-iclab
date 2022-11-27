@@ -31,8 +31,10 @@ pipeline {
                     tagCommit=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)
                     echo 'El tag de commit fue : $tagCommit'
                     
-                    if(tagCommit.startsWith("Patch")) 
-                    {
+                    echo tagCommit.startsWith('Patch');
+                    
+                    if(tagCommit.startsWith('Patch')) 
+                    {                        
                         echo 'Commit Patch ($tagCommit)....'
                     }
                     else if (tagCommit.startsWith("Minor"))
