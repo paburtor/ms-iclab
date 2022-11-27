@@ -120,9 +120,9 @@ pipeline {
                     echo "lasttag: "+lasttag
                     //ver si mensaje contiene una palabra
                     if(env.commitmsg.contains("major")){
-                        lasttag = (lasttag[0].toInteger()+1)+"."+lasttag[1]+"."lasttag[2]
+                        lasttag = (lasttag[0].toInteger()+1)+"."+lasttag[1]+"."+lasttag[2]
                     }else if(env.commitmsg.contains("minor")){
-                        lasttag = lasttag[0]+"."+(lasttag[1].toInteger()+1)+"."lasttag[2]
+                        lasttag = lasttag[0]+"."+(lasttag[1].toInteger()+1)+"."+lasttag[2]
                     }else if(env.commitmsg.contains("patch")){
                         lasttag = lasttag[0]+"."+lasttag[1]+"."+(lasttag[2].toInteger()+1)
                     }else{
@@ -131,7 +131,20 @@ pipeline {
                         error("No se ha encontrado ninguna palabra clave para el incremento de version")
                     }
                     echo "lasttag: "+lasttag
-                     
+                    //crear nuevo tag en repo
+                    sh "git tag -a v"+lasttag+" -m 'v"+lasttag+"'"
+                    sh "git push origin v"+lasttag
+                    //actualizar version en pom.xml
+                    // sh "mvn versions:set -DnewVersion="+lasttag+" -DgenerateBackupPoms=false"
+                    // //subir cambios a repo
+                    // sh "git add pom.xml"
+                    // sh "git commit -m 'v"+lasttag+"'"
+                    // sh "git push origin "+env.BRANCH_NAME
+                    // //subir a nexus
+                    // sh "mvn deploy -DskipTests"
+                    // //slackSend color: "good", message: "lasttagnexus.. branch: "+env.BRANCH_NAME
+
+
                 }
             }
 
