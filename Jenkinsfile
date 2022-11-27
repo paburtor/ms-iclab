@@ -47,7 +47,8 @@ pipeline {
                     }
                     else
                     {
-                        throw new Exception("Error Git Comment ($tagCommit)")                                      
+                        echo 'Error Git Comment ($tagCommit)....'                        
+                        //throw new Exception("Error Git Comment ($tagCommit)")                                      
                     }    
                 }                                                                  
             }
