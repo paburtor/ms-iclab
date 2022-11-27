@@ -40,7 +40,7 @@ pipeline {
                     //echo "El comentario del commit fue: $comment"
                     //echo 'El tag de commit fue : $tagCommit'
                                                            
-                    if(comment.startsWith('Patch')) 
+                    if(comment.startsWith('Patch:') || comment.startsWith('Patch :')) 
                     {                        
                         echo "Commit Patch -> ($comment)"
                     }
