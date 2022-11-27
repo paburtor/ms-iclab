@@ -36,7 +36,7 @@ pipeline {
                                         
                     echo "Commit :  $commit"
                     echo "Comment :  $comment"                    
-                    echo tags.readLines()
+                    echo tags
                     
                     //echo tagCommit
                     //echo "El comentario del commit fue: $comment"
