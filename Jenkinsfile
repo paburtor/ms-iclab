@@ -145,7 +145,7 @@ pipeline {
                     }
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'token-danilo', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
                         // sh("git tag -a some_tag -m 'Jenkins'")
-                        sh("git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@<REPO> --tags")
+                        sh("git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@${env.GIT_URL} --tags")
                     }
                     // sh "git config --global user.email 'danilovidalm@gmail.com'"
                     // sh "git config --global user.name 'Grupo 3'"
