@@ -2,7 +2,7 @@ def pipelineType
 def mensaje
 
 def mns(pipeline,branch,stagename,status){
-    return "Grupo 3 - " + pipeline + " - Rama : " + branch + " - Stage : " + stagename + " - " + status
+    return 
     
 }
 
@@ -37,23 +37,88 @@ pipeline {
                 }
             }
         }
-        stage("Build"){
+        // stage("Build"){
+        //     when { anyOf { branch 'feature-*'; branch 'main' } }
+        //     steps {
+        //         // sh './mvnw clean compile -e'
+        //         slackSend color: "good", message: "Building.. branch: "+env.BRANCH_NAME
+        //     }
+        //     post{
+        //         success{
+        //             slackSend color: "good", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success"
+        //         }
+        //         failure {
+        //             slackSend color: "danger", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Fail"
+        //         }
+        //     }
+        // }
+        // stage('Test') {
+        //     when { anyOf { branch 'feature-*'; branch 'main' } }
+        //     steps {
+        //         // sh './mvnw test -e'
+        //         slackSend color: "good", message: "Testing.. branch: "+env.BRANCH_NAME
+        //     }
+        //     post{
+        //         success{
+        //             slackSend color: "good", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success"
+        //         }
+        //         failure {
+        //             slackSend color: "danger", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Fail"
+        //         }
+        //     }
+        // }
+        // stage('SonarQube') {
+        //     when { anyOf { branch 'feature-*'; branch 'main' } }
+        //     steps {
+        //         // sh './mvnw sonar:sonar -e'
+        //         slackSend color: "good", message: "SonarQube.. branch: "+env.BRANCH_NAME
+        //         withSonarQubeEnv('sonar-public') { // If you have configured more than one global server connection, you can specify its name
+        //             sh './mvnw clean package sonar:sonar'
+        //         }
+        //     }
+        //     post{
+        //         success{
+        //             slackSend color: "good", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success"
+        //         }
+        //         failure {
+        //             slackSend color: "danger", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Fail"
+        //         }
+        //     }
+        // }
+        // stage('Package'){
+        //     when { anyOf { branch 'feature-*'; branch 'main' } }
+        //     steps {
+        //         // sh './mvnw package -e'
+        //         slackSend color: "good", message: "Packaging.. branch: "+env.BRANCH_NAME
+        //     }
+        //     post{
+        //         success{
+        //             slackSend color: "good", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success"
+        //         }
+        //         failure {
+        //             slackSend color: "danger", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Fail"
+        //         }
+        //     }
+        // }
+        stage('lasttagnexus'){
+            
             when { anyOf { branch 'feature-*'; branch 'main' } }
             steps {
-                // sh './mvnw clean compile -e'
-                // slackSend color: "good", message: "Building.. branch: "+env.BRANCH_NAME
-            }
-            post{
-                success{
-                    mensaje = mns(pipelineType,env.BRANCH_NAME,env.STAGE_NAME,'Success')
-                    slackSend color: "good", message: mensaje
+                script {
+                    lasttag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags')
+                    echo "lasttag: "+lasttag
+                    lasttag = lasttag.trim()
+                    echo "lasttag: "+lasttag
+                    lasttag = lasttag.substring(1)
+                    echo "lasttag: "+lasttag
+                    lasttag = lasttag.split("\\.")
+                    echo "lasttag: "+lasttag
+                    lasttag = lasttag[0]+"."+lasttag[1]+"."+(lasttag[2].toInteger()+1)
+                    echo "lasttag: "+lasttag
                 }
-                failure {
-                    mensaje = mns(pipelineType,env.BRANCH_NAME,env.STAGE_NAME,'Fail')
-                    slackSend color: "danger", message: mensaje
+            }
 
-                }
-            }
         }
+
     }
 }
