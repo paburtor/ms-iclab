@@ -19,9 +19,13 @@ pipeline {
     //[Grupo2][Pipeline IC/CD][Rama: develop][Stage: build][Resultado: Éxito/Success].
     //[Grupo2][Pipeline IC/CD][Rama: re-v1-0-0][Stage: test][Resultado: Error/Fail].
     stages {
+        stage('Checkout') {
+            cleanWs()
+            checkout scm
+        }
         stage("Env Variables") {
             steps {
-                cleanWs()
+                
                 sh "printenv"
                 script {
                     if(env.BRANCH_NAME == 'main'){
