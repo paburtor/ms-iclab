@@ -30,7 +30,7 @@ pipeline {
                 script
                 {
                     tagCommit=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)
-                    commentCommit=sh(script: 'git log -1', returnStdout: true)
+                    commentCommit=sh(script: 'git log --format=%B -n 1', returnStdout: true)
                     
                     echo tagCommit
                     echo commentCommit
