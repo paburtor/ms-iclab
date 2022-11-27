@@ -122,7 +122,7 @@ pipeline {
                     echo "lasttag: "+lasttag
                     //ver si mensaje contiene una palabra
                     if(env.commitmsg.contains("major")){
-                        lasttag = (lasttag[0].toInteger()+1)+"."+lasttag[1]+"."+lasttag[2]
+                        lasttag = (lasttag[0].toInteger()+1)+".0.0"
                     }else if(env.commitmsg.contains("minor")){
                         lasttag = lasttag[0]+"."+(lasttag[1].toInteger()+1)+"."+lasttag[2]
                     }else if(env.commitmsg.contains("patch")){
@@ -135,11 +135,14 @@ pipeline {
                     echo "lasttag: "+lasttag
                     //crear nuevo tag en repo
                     sh "git tag -a v"+lasttag+" -m 'v"+lasttag+"'"
-                    //login github
-                    sh "git config --global user.email 'danilovidalm@gmail.com'"
-                    sh "git config --global user.name 'Grupo 3'"
-                    //push tag
-                    sh "git push origin v"+lasttag
+                    //usar credenciales guardadas en jenkins para github
+                    withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                        sh "git push --tags https://$USERNAME:$
+                    }
+                    // sh "git config --global user.email 'danilovidalm@gmail.com'"
+                    // sh "git config --global user.name 'Grupo 3'"
+                    // //push tag
+                    // sh "git push origin v"+lasttag
 
                     // sh "git push origin v"+lasttag
                     //actualizar version en pom.xml
