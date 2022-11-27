@@ -36,23 +36,23 @@ pipeline {
                     echo commentCommit
                     //echo 'El tag de commit fue : $tagCommit'
                     
-                    echo tagCommit.startsWith('Patch');
+                    echo commentCommit.startsWith('Patch');
                     
-                    if(tagCommit.startsWith('Patch')) 
+                    if(commentCommit.startsWith('Patch')) 
                     {                        
-                        echo 'Commit Patch ($tagCommit)....'
+                        echo 'Commit Patch ($commentCommit)....'
                     }
-                    else if (tagCommit.startsWith("Minor"))
+                    else if (commentCommit.startsWith("Minor"))
                     {
-                        echo 'Commit Minor ($tagCommit)....'                        
+                        echo 'Commit Minor ($commentCommit)....'                        
                     }
-                    else if (tagCommit.startsWith("Major"))
+                    else if (commentCommit.startsWith("Major"))
                     {
-                        echo 'Commit Major ($tagCommit)....'                        
+                        echo 'Commit Major ($commentCommit)....'                        
                     }
                     else
                     {
-                        echo 'Error Git Comment ($tagCommit)....'                        
+                        echo 'Error Git Comment ($commentCommit)....'                        
                         //throw new Exception("Error Git Comment ($tagCommit)")                                      
                     }    
                 }                                                                  
