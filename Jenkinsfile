@@ -33,8 +33,8 @@ pipeline {
                     commit=sh(script: 'git log -1 --format=format:"%H"', returnStdout: true)
                     comment=sh(script: 'git log --format=%B -n 1 $commit', returnStdout: true)
                     
-                    echo "Commit : $commit"
-                    echo "Comment : $comment"                    
+                    echo "Commit :  $commit"
+                    echo "Comment :  $comment"                    
                     
                     //echo tagCommit
                     //echo "El comentario del commit fue: $comment"
