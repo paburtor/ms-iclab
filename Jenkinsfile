@@ -120,11 +120,11 @@ pipeline {
             }
             post {
                 success {
-                    //echo 'Build Success ' + params.Tool
+                    echo 'Build Success '
                     //slackSend color: "good", message: "Build Success"
                 }
                 failure {
-                    //echo 'Build Failed ' + params.Tool
+                    echo 'Build Failed '
                     //slackSend color: "danger", message: "Build Failed"
                 }
             }
