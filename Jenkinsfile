@@ -137,7 +137,7 @@ pipeline {
                     sh "git tag -a v"+lasttag+" -m 'v"+lasttag+"'"
                     //usar credenciales guardadas en jenkins para github
                     withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-                        sh "git push --tags https://$USERNAME:$
+                        sh "git push --tags https://${USERNAME}:${PASSWORD}@${env.GIT_URL}"
                     }
                     // sh "git config --global user.email 'danilovidalm@gmail.com'"
                     // sh "git config --global user.name 'Grupo 3'"
