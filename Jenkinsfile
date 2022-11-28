@@ -66,7 +66,10 @@ pipeline {
                         sh(script: 'git checkout main',  returnStdout: true)
                         
                         echo "Haciendo merge hacia main"
-                        sh(script: 'git merge $env.BRANCH_NAME', returnStdout: true)
+                        sh(script: 'git merge feature-estado-pais', returnStdout: true)
+                        
+                        echo "Haciendo push"
+                        sh(script: 'git push', returnStdout: true)                        
                         
                         //sh(script: 'git push --set-upstream origin main', returnStdout: true)
                         //merge=sh(script: 'git merge main', returnStdout: true)                        
