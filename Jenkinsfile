@@ -12,6 +12,9 @@ pipeline {
         {
             steps{
                 cleanWs()
+                sh 'mkdir $WORKSPACE/repo'
+                sh 'chmod 755 $WORKSPACE/repo')
+                                                
             //[$class: 'RelativeTargetDirectory',relativeTargetDir: "$WORKSPACE"]],    
             checkout([
                 $class: 'GitSCM',
