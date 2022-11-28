@@ -169,7 +169,7 @@ pipeline {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'userpassgithub', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
                         // sh("git tag -a some_tag -m 'Jenkins'")
                         sh "git config --global user.email 'danilovidalm@gmail.com'"
-                        sh "git config --global user.name 'Grupo 3'"
+                        sh "git config --global user.name 'danilo2311'"
                         sh("git push origin --tags")
 
                     }
