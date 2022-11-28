@@ -1,6 +1,6 @@
 def pipelineType
-// def git_repo = 'git@github.com:DevOps-Corfo-2022-Seccion1-DV/ms-iclab.git'
-def git_repo = 'github.com/DevOps-Corfo-2022-Seccion1-DV/ms-iclab'
+def git_repo = 'github.com:DevOps-Corfo-2022-Seccion1-DV/ms-iclab.git'
+// def git_repo = 'github.com/DevOps-Corfo-2022-Seccion1-DV/ms-iclab'
 
 pipeline {
     agent any
