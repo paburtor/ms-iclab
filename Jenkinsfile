@@ -12,14 +12,12 @@ pipeline {
         stage('Checkout SCM')
         {
             steps{
-                
+            //[$class: 'RelativeTargetDirectory',relativeTargetDir: "$WORKSPACE"]],    
             checkout([
                 $class: 'GitSCM',
                 branches: scm.branches,
                 doGenerateSubmoduleConfigurations: scm.doGenerateSubmoduleConfigurations,
-                extensions: [[$class: 'CloneOption', noTags: false, shallow: false, depth: 0, reference: ''],
-                            [$class: 'RelativeTargetDirectory',relativeTargetDir: "$WORKSPACE"]],
-                
+                extensions: [[$class: 'CloneOption', noTags: false, shallow: false, depth: 0, reference: '']                                            
                 userRemoteConfigs: scm.userRemoteConfigs,
              ])
             }
