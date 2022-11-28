@@ -32,6 +32,7 @@ pipeline {
                     //tagCommit=sh(script: 'git describe $GIT_COMMIT --abbrev=0', returnStdout: true)                    
                     commit=sh(script: 'git log -1 --format=format:"%H"', returnStdout: true)
                     comment=sh(script: 'git log --format=%B -n 1', returnStdout: true)
+                    comment=comment.toLowerCase()                    
                     tags=sh(script: 'git ls-remote --tags --sort v:refname | head -n 1 | cut -d "/" -f 3', returnStdout: true)
                     //tag=sh(script: 'echo $tags > head -n 1', returnStdout: true)
                     
