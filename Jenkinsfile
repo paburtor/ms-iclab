@@ -170,7 +170,7 @@ pipeline {
                         // sh("git tag -a some_tag -m 'Jenkins'")
                         sh "git config --global user.email 'danilovidalm@gmail.com'"
                         sh "git config --global user.name 'Grupo 3'"
-                        sh("git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@${git_repo} --tags")
+                        sh("git push origin --tags")
 
                     }
                     // //push tag
