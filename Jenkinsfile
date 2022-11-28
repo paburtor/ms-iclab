@@ -45,7 +45,7 @@ pipeline {
                     }
                     else
                     {
-                        echo "Branch name (feature): $env.BRANCH_NAME"                        
+                        echo "Branch name (feature) : $env.BRANCH_NAME"                        
                     }
                                            
                     //echo tagCommit
