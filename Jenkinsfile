@@ -1,5 +1,7 @@
 def pipelineType
-def git_repo = 'git@github.com:DevOps-Corfo-2022-Seccion1-DV/ms-iclab.git'
+// def git_repo = 'git@github.com:DevOps-Corfo-2022-Seccion1-DV/ms-iclab.git'
+def git_repo = 'github.com/DevOps-Corfo-2022-Seccion1-DV/ms-iclab'
+
 pipeline {
     agent any
     tools {
@@ -169,7 +171,7 @@ pipeline {
                         sh "git config --global user.email 'danilovidalm@gmail.com'"
                         sh "git config --global user.name 'Grupo 3'"
                         sh("git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@${git_repo} --tags")
-                        
+
                     }
                     // //push tag
                     // sh "git push origin v"+lasttag
