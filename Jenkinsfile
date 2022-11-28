@@ -2,6 +2,7 @@ def responseStatus = ''
 def myscript
 def tagCommit
 def comment
+def merge
 
 pipeline {
     agent any
@@ -60,8 +61,11 @@ pipeline {
                     if(comment.startsWith('patch:') || comment.startsWith('patch :')) 
                     {                        
                         echo "Commit Patch -> ($comment)"
-                        echo "Haciendo push a main"                        
-                        sh(script: 'git push --set-upstream origin main', returnStdout: true)                        
+                        echo "Haciendo merge a main"                        
+                        //sh(script: 'git push --set-upstream origin main', returnStdout: true)
+                        merge=sh(script: 'git merge main', returnStdout: true)                        
+                        echo merge
+                        
                     }
                     else
                     {
