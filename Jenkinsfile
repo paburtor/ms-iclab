@@ -166,11 +166,14 @@ pipeline {
                     //         sh("git config user.email 'jenkins@mycompany.com'")
                     //         sh "git push --tags"
                     // }
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'userpassgithub', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
-                        // sh("git tag -a some_tag -m 'Jenkins'")
+                    // withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'userpassgithub', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
+                    //     // sh("git tag -a some_tag -m 'Jenkins'")
+
+                    // }
+                    sshagent(credentials: ['token-danilo']){
                         sh "git config --global user.email 'danilovidalm@gmail.com'"
-                        sh "git config --global user.name 'danilo2311'"
-                        sh("git push origin --tags")
+                        sh "git config --global user.name 'Jenkins'"
+                        sh "git push origin --tags"
 
                     }
                     // //push tag
