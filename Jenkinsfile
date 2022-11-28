@@ -57,19 +57,25 @@ pipeline {
                     {                        
                         echo "Commit Patch -> ($comment)"
                     }
-                    if(comment.startsWith('minor:') || comment.startsWith('minor :')) 
-                    {
-                        echo "Commit Minor -> ($comment)"                        
-                    }
-                    else if (comment.startsWith("major:") || comment.startsWith("major :"))
-                    {
-                        echo "Commit Major -> ($comment)"                        
-                    }
                     else
                     {
-                        echo 'Error Git Comment....'                        
-                        //throw new Exception("Error Git Comment ($comment)")                                      
-                    }    
+                        if(comment.startsWith('minor:') || comment.startsWith('minor :')) 
+                        {
+                            echo "Commit Minor -> ($comment)"                        
+                        }
+                        else
+                        {
+                            if (comment.startsWith("major:") || comment.startsWith("major :"))
+                            {
+                                echo "Commit Major -> ($comment)"                        
+                            }
+                            else
+                            {
+                                echo 'Error Git Comment....'                        
+                                //throw new Exception("Error Git Comment ($comment)")                                      
+                            }                                
+                        }
+                    }                                           
                 }                                                                  
             }
         }
