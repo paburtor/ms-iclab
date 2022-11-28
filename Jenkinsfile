@@ -7,15 +7,11 @@ pipeline {
     agent any
     options { skipDefaultCheckout() } 
     
-    stages {
-        stage('Clean')
-        {
-            cleanWs()
-        }
-       
+    stages {              
         stage('Checkout SCM')
         {
             steps{
+                cleanWs()
             //[$class: 'RelativeTargetDirectory',relativeTargetDir: "$WORKSPACE"]],    
             checkout([
                 $class: 'GitSCM',
