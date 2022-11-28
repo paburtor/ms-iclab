@@ -53,22 +53,22 @@ pipeline {
                     //echo "El comentario del commit fue: $comment"
                     //echo 'El tag de commit fue : $tagCommit'
                                                            
-                    if(comment.startsWith('Patch:') || comment.startsWith('Patch :')) 
+                    if(comment.startsWith('patch:') || comment.startsWith('patch :')) 
                     {                        
                         echo "Commit Patch -> ($comment)"
                     }
-                    if(comment.startsWith('Minor:') || comment.startsWith('Minor :')) 
+                    if(comment.startsWith('minor:') || comment.startsWith('minor :')) 
                     {
                         echo "Commit Minor -> ($comment)"                        
                     }
-                    else if (comment.startsWith("Major"))
+                    else if (comment.startsWith("major:") || comment.startsWith("major :"))
                     {
                         echo "Commit Major -> ($comment)"                        
                     }
                     else
                     {
-                        //echo 'Error Git Comment....'                        
-                        throw new Exception("Error Git Comment ($comment)")                                      
+                        echo 'Error Git Comment....'                        
+                        //throw new Exception("Error Git Comment ($comment)")                                      
                     }    
                 }                                                                  
             }
