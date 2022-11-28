@@ -38,6 +38,7 @@ pipeline {
                     echo "Commit :  $commit"
                     echo "Comment :  $comment"                                        
                     echo "Tags :  $tags"                                                            
+                    echo "Branch name: $env.BRANCH_NAME"
                     
                     //echo tagCommit
                     //echo "El comentario del commit fue: $comment"
