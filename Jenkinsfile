@@ -171,8 +171,8 @@ pipeline {
 
                     // }
                     sshagent(credentials: ['token-danilo']){
-                        sh "git config --global user.email 'danilovidalm@gmail.com'"
-                        sh "git config --global user.name 'Jenkins'"
+                        // sh "git config --global user.email 'danilovidalm@gmail.com'"
+                        // sh "git config --global user.name 'Jenkins'"
                         sh "git push origin --tags"
 
                     }
