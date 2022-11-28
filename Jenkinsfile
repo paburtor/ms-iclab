@@ -37,9 +37,17 @@ pipeline {
                     
                     echo "Commit :  $commit"
                     echo "Comment :  $comment"                                        
-                    echo "Tags :  $tags"                                                            
-                    echo "Branch name: $env.BRANCH_NAME"
+                    echo "Tags :  $tags"                                                                                
                     
+                    if(env.BRANCH_NAME == "main")
+                    {
+                        echo "Branch name (main): $env.BRANCH_NAME"                        
+                    }
+                    else
+                    {
+                        echo "Branch name (feature): $env.BRANCH_NAME"                        
+                    }
+                                           
                     //echo tagCommit
                     //echo "El comentario del commit fue: $comment"
                     //echo 'El tag de commit fue : $tagCommit'
