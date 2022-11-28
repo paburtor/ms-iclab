@@ -1,5 +1,5 @@
 def pipelineType
-
+def git_repo = 'git@github.com:DevOps-Corfo-2022-Seccion1-DV/ms-iclab.git'
 pipeline {
     agent any
     tools {
@@ -15,6 +15,7 @@ pipeline {
         projectname = sh(script: 'git remote get-url origin | cut -d "/" -f5', returnStdout: true)
         commiteremail = sh(returnStdout: true, script: 'git log --pretty=%ae HEAD -n1')
         jenkinsurl = sh(script: 'echo "${BUILD_URL}"' , returnStdout: true).trim()
+
     }
     //[Grupo2][Pipeline IC/CD][Rama: develop][Stage: build][Resultado: Éxito/Success].
     //[Grupo2][Pipeline IC/CD][Rama: re-v1-0-0][Stage: test][Resultado: Error/Fail].
@@ -87,8 +88,10 @@ pipeline {
         //         }
         //     }
         // }
+        //generar pull request desde rama feature a main
+
         // stage('Package'){
-        //     when { anyOf { branch 'feature-*'; branch 'main' } }
+        //     when { anyOf {  branch 'main' } }
         //     steps {
         //         // sh './mvnw package -e'
         //         slackSend color: "good", message: "Packaging.. branch: "+env.BRANCH_NAME
@@ -102,6 +105,9 @@ pipeline {
         //         }
         //     }
         // }
+
+        //hacer push en rama feature
+
         stage('lasttagnexus'){
             
             when { anyOf { branch 'feature-*'; branch 'main' } }
@@ -135,20 +141,35 @@ pipeline {
                     echo "lasttag: "+lasttag
                     //crear nuevo tag en repo
                     sh "git tag -a v"+lasttag+" -m 'v"+lasttag+"'"
+
+                    // sh "git push origin v"+lasttag
+                    //enviar tag a nexus
+                    // nexusUpload(
+                    //     groupId: 'com.grupo3',
+                    //     artifactId: 'grupo3',
+                    //     version: lasttag,
+                    //     packaging: 'jar',
+                    //     file: 'target/grupo3-0.0.1-SNAPSHOT.jar',
+                    //     repositoryId: 'nexus-public',
+                    //     url: 'http://nexus:8081/repository/maven-public/'
+                    // )
+                
                     //usar credenciales guardadas en jenkins para github
                     // withCredentials([usernamePassword(
-                    //     credentialsId: 'token-danilo', 
+                    //     credentialsId: 'userpassgithub', 
                     //     passwordVariable: 'PASSWORD', 
                     //     usernameVariable: 'USERNAME')
                     //     ]) {
-                    //     sh "git push --tags"
+                    //         sh("git config user.name 'Jenkins'")
+                    //         sh("git config user.email 'jenkins@mycompany.com'")
+                    //         sh "git push --tags"
                     // }
-                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'token-danilo', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'userpassgithub', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
                         // sh("git tag -a some_tag -m 'Jenkins'")
-                        sh("git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@<REPO> --tags")
+                        sh "git config --global user.email 'danilovidalm@gmail.com'"
+                        sh "git config --global user.name 'Grupo 3'"
+                        sh("git push https://${env.GIT_USERNAME}:${env.GIT_PASSWORD}@${git_repo} --tags")
                     }
-                    // sh "git config --global user.email 'danilovidalm@gmail.com'"
-                    // sh "git config --global user.name 'Grupo 3'"
                     // //push tag
                     // sh "git push origin v"+lasttag
 
