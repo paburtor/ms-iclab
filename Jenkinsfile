@@ -60,6 +60,8 @@ pipeline {
                     if(comment.startsWith('patch:') || comment.startsWith('patch :')) 
                     {                        
                         echo "Commit Patch -> ($comment)"
+                        echo "Haciendo push a main"                        
+                        sh(script: 'git push --set-upstream origin main', returnStdout: true)                        
                     }
                     else
                     {
