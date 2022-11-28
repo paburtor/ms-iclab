@@ -6,7 +6,15 @@ def comment
 pipeline {
     agent any
     options { skipDefaultCheckout() } 
-            
+
+    stages 
+    {       
+        stage('Clean')
+        {
+            cleanWs()
+        }
+     }
+    
     stages {
        
         stage('Checkout SCM')
