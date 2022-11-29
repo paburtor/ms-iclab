@@ -151,13 +151,7 @@ pipeline {
                         git config --local credential.helper "!f() { echo username=\\$GIT_AUTH_USR; echo password=\\$GIT_AUTH_PSW; }; f"
                         git push --tags
                     ''')
-                    // git push origin HEAD:$TARGET_BRANCH
-                    // sshagent(credentials: ['token-danilo']){
-                    //     sh "git remote get-url --all origin"
-                    //     sh "git push origin --tags"
 
-                    // }
-                    // sh "git push origin v"+lasttag
                     //enviar tag a nexus
                     // nexusUpload(
                     //     groupId: 'com.grupo3',
