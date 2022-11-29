@@ -72,7 +72,7 @@ pipeline {
                         //echo "Commit Patch -> ("$comment")"
                         echo "Haciendo pull request"
                         
-                        pullrequest='curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer {token}" https://api.github.com/repos/paburtor/ms-iclab/pulls -d {"title":"{title}","body":"{body}","head":"{branch}","base":"main"}'
+                        pullrequest='curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer {token}" https://api.github.com/repos/paburtor/ms-iclab/pulls -d \'{"title":"{title}","body":"{body}","head":"{branch}","base":"main"}\''
                                                
                         pullrequest=pullrequest.replace("{token}",$GIT_AUTH)
                         //myjson='{"title":"{title}","body":"{body}","head":"{branch}","base":"main"}'
