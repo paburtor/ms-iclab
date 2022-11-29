@@ -190,7 +190,7 @@ pipeline {
             // }
             when { anyOf { branch 'feature-*' } }
             steps{
-                echo env.GIT_AUTH_PSW
+                echo env.GIT_AUTH
                 // script {
                     
                 //     // statusCode = sh (script: 'curl -o /dev/null -s -w "%{http_code}" -X POST -H "Accept: apllication/vnd.github+json" -H "Autorization: Bearer $GIT_AUTH_PSW" https://api.github.com/repos/DevOps-Corfo-2022-Seccion1-DV/ms-iclab/pulls -d{"title":"Titulo pull request","body":"Cuerpo pull request","head":"${env.BRANCH_NAME}","base":"main"}', returnStdout: true)
