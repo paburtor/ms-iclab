@@ -169,21 +169,6 @@ pipeline {
                     //     url: 'http://nexus:8081/repository/maven-public/'
                     // )
                 
-                    //usar credenciales guardadas en jenkins para github
-                    // withCredentials([usernamePassword(
-                    //     credentialsId: 'userpassgithub', 
-                    //     passwordVariable: 'PASSWORD', 
-                    //     usernameVariable: 'USERNAME')
-                    //     ]) {
-                    //         sh("git config user.name 'Jenkins'")
-                    //         sh("git config user.email 'jenkins@mycompany.com'")
-                    //         sh "git push --tags"
-                    // }
-                    // withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'userpassgithub', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD']]) {
-                    //     // sh("git tag -a some_tag -m 'Jenkins'")
-
-                    // }
-
                     // sh "git push origin v"+lasttag
                     //actualizar version en pom.xml
                     // sh "mvn versions:set -DnewVersion="+lasttag+" -DgenerateBackupPoms=false"
