@@ -80,7 +80,7 @@ pipeline {
                         myjson=myjson.replace("{body}", "Body prueba")
                         myjson=myjson.replace("{branch}", env.BRANCH_NAME)
                                                 
-                        echo 'JSON: $myjson'
+                        echo "JSON: $myjson"
                                                                        
                         //statuscode=sh(script: 'curl -o /dev/null -s -w "%{http_code}" -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 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" https://api.github.com/repos/paburtor/ms-iclab/pulls -d {"title":"Titulo pull request","body":"Cuerpo pull request","head":"feature-estado-pais","base":"main"}', returnStdout: true)                         
                         statuscode=sh(script: "curl -X POST -H \"Accept: application/vnd.github+json\" -H \"Authorization: Bearer $GIT_AUTH\" https://api.github.com/repos/paburtor/ms-iclab/pulls -d $myjson", returnStdout: true)                         
