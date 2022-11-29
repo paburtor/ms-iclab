@@ -3,13 +3,21 @@ def myscript
 def tagCommit
 def comment
 def merge
+def statuscode
+def myjson = ''
+def pullrequest=''
 
 pipeline {
     agent any
     options { skipDefaultCheckout() } 
     
+     environment
+    {
+        GIT_AUTH = credentials('token_jenkins_github')
+    }        
+    
     stages {              
-        stage('Checkout SCM Test')
+        stage('Checkout SCM Test   ')
         {
             steps{
                 cleanWs()
@@ -59,10 +67,26 @@ pipeline {
                     //echo 'El tag de commit fue : $tagCommit'
                                                            
                     if(comment.startsWith('patch:') || comment.startsWith('patch :')) 
-                    {                        
-                        echo "Commit Patch -> ($comment)"
+                    {
+                        //comment='"' + comment + '"'
+                        //echo "Commit Patch -> ("$comment")"
+                        echo "Haciendo pull request"
                         
-                        sh(script: 'git request-pull v0,0.2 https://github.com/paburtor/ms-iclab.git main', returnStdout: true)                         
+                        //pullcmd='curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer {token}" https://api.github.com/repos/paburtor/ms-iclab/pulls -d \'{"title":"{title}","body":"{body}","head":"{branch}","base":"main"}\''
+                                               
+                        //pullcmd=pullrequest.replace("{token}",$GIT_AUTH)
+                        myjson='{\"title\":\"{title}\",\"body\":\"{body}\",\"head\":\"{branch}\",\"base\":\"main\"}'
+                        myjson=myjson.replace("{title}", "Titulo prueba")
+                        myjson=myjson.replace("{body}", "Body prueba")
+                        myjson=myjson.replace("{branch}", env.BRANCH_NAME)
+                                                
+                        echo "JSON: $myjson"
+                                                                       
+                        //statuscode=sh(script: 'curl -o /dev/null -s -w "%{http_code}" -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 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" https://api.github.com/repos/paburtor/ms-iclab/pulls -d {"title":"Titulo pull request","body":"Cuerpo pull request","head":"feature-estado-pais","base":"main"}', returnStdout: true)                         
+                        statuscode=sh(script: "curl -X POST -H \"Accept: application/vnd.github+json\" -H \"Authorization: Bearer $GIT_AUTH\" https://api.github.com/repos/paburtor/ms-iclab/pulls --data-raw '$myjson'", returnStdout: true)                         
+                        echo "Resultado Pull request : $statuscode"                        
+                        
+                        //sh(script: 'git request-pull v0,0.2 https://github.com/paburtor/ms-iclab.git main', returnStdout: true)                         
                         
                         echo "Haciendo checkout a main"
                         //sh(script: 'git checkout main',  returnStdout: true)
