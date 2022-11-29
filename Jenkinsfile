@@ -62,10 +62,10 @@ pipeline {
                     if(comment.startsWith('patch:') || comment.startsWith('patch :')) 
                     {
                         //comment='"' + comment + '"'
-                        echo 'Commit Patch -> ($comment)'
+                        echo "Commit Patch -> (\"$comment\")"
                         echo "Haciendo pull request"
                         //statuscode=sh(script: 'curl -o /dev/null -s -w "%{http_code}" -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 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" https://api.github.com/repos/paburtor/ms-iclab/pulls -d {"title":"Titulo pull request","body":"Cuerpo pull request","head":"feature-estado-pais","base":"main"}', returnStdout: true)                         
-                        statuscode=sh(script: 'curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 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" https://api.github.com/repos/paburtor/ms-iclab/pulls -d {"title":"Titulo pull request","body":"Cuerpo pull request","head":"feature-estado-pais","base":"main"}', returnStdout: true)                         
+                        statuscode=sh(script: 'curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer " https://api.github.com/repos/paburtor/ms-iclab/pulls -d {"title":"Titulo pull request","body":"Cuerpo pull request","head":"$env.BRANCH_NAME","base":"main"}', returnStdout: true)                         
                         echo "Resultado Pull request : $statuscode"                        
                         
                         //sh(script: 'git request-pull v0,0.2 https://github.com/paburtor/ms-iclab.git main', returnStdout: true)                         
