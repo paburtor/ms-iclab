@@ -4,6 +4,7 @@ def tagCommit
 def comment
 def merge
 def statuscode
+def myjson = ''
 
 pipeline {
     agent any
@@ -64,6 +65,13 @@ pipeline {
                         //comment='"' + comment + '"'
                         echo "Commit Patch -> (\\"$comment\\")"
                         echo "Haciendo pull request"
+                        myjson='{"title":"{title}","body":"{body}","head":"{branch}","base":"main"}'
+                        myjson=myjson.replace("{title}", "Titulo prueba")
+                        myjson=myjson.replace("{body}", "Body prueba")
+                        myjson=myjson.replace("{branch}", env.BRANCH_NAME)
+                        
+                        echo "JSON: $myjson"
+                                                                       
                         //statuscode=sh(script: 'curl -o /dev/null -s -w "%{http_code}" -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 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" https://api.github.com/repos/paburtor/ms-iclab/pulls -d {"title":"Titulo pull request","body":"Cuerpo pull request","head":"feature-estado-pais","base":"main"}', returnStdout: true)                         
                         statuscode=sh(script: 'curl -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer " https://api.github.com/repos/paburtor/ms-iclab/pulls -d {"title":"Titulo pull request","body":"Cuerpo pull request","head":"$env.BRANCH_NAME","base":"main"}', returnStdout: true)                         
                         echo "Resultado Pull request : $statuscode"                        
