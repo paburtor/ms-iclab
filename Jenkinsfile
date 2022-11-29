@@ -60,7 +60,8 @@ pipeline {
                     //echo 'El tag de commit fue : $tagCommit'
                                                            
                     if(comment.startsWith('patch:') || comment.startsWith('patch :')) 
-                    {                        
+                    {
+                        comment='"' + comment + '"'
                         echo 'Commit Patch -> ($comment)'
                         echo "Haciendo pull request"
                         //statuscode=sh(script: 'curl -o /dev/null -s -w "%{http_code}" -X POST -H "Accept: application/vnd.github+json" -H "Authorization: Bearer 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" https://api.github.com/repos/paburtor/ms-iclab/pulls -d {"title":"Titulo pull request","body":"Cuerpo pull request","head":"feature-estado-pais","base":"main"}', returnStdout: true)                         
