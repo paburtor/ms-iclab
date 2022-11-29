@@ -32,8 +32,7 @@ pipeline {
         }
         stage("Env Variables") {
             steps {
-                
-                sh "printenv"
+                // sh "printenv"
                 script {
                     if(env.BRANCH_NAME == 'main'){
                         pipelineType = "Pipeline CD"
@@ -184,37 +183,37 @@ pipeline {
 
         }
 
-        stage('pull request rama feature-*'){
-            // environment {
-            //     GIT_AUTH = credentials('token-danilo')
-            // }
-            when { anyOf { branch 'feature-*' } }
-            steps{
-                script {
-                    statusCode = sh(script: 'curl -o /dev/null -s -w "%{http_code}" -X POST -H "Accept: apllication/vnd.github+json" -H "Autorization: Bearer $GIT_AUTH_PSW" https://api.github.com/repos/DevOps-Corfo-2022-Seccion1-DV/ms-iclab/pulls -d{"title":"Titulo pull request","body":"Cuerpo pull request","head":"${env.BRANCH_NAME}","base":"main"}', returnStdout: true)
-                }
-                               // script {
+        // stage('pull request rama feature-*'){
+        //     // environment {
+        //     //     GIT_AUTH = credentials('token-danilo')
+        //     // }
+        //     when { anyOf { branch 'feature-*' } }
+        //     steps{
+        //         script {
+        //             statusCode = sh(script: 'curl -o /dev/null -s -w "%{http_code}" -X POST -H "Accept: apllication/vnd.github+json" -H "Autorization: Bearer $GIT_AUTH_PSW" https://api.github.com/repos/DevOps-Corfo-2022-Seccion1-DV/ms-iclab/pulls -d{"title":"Titulo pull request","body":"Cuerpo pull request","head":"${env.BRANCH_NAME}","base":"main"}', returnStdout: true)
+        //         }
+        //                        // script {
                     
-                //     // echo "status code: "+statusCode
-                //     // if(statusCode == 201){
-                //     //     slackSend color: "good", message: "pull request creado"
-                //     // }else{
-                //     //     slackSend color: "danger", message: "pull request no creado"
-                //     // }
+        //         //     // echo "status code: "+statusCode
+        //         //     // if(statusCode == 201){
+        //         //     //     slackSend color: "good", message: "pull request creado"
+        //         //     // }else{
+        //         //     //     slackSend color: "danger", message: "pull request no creado"
+        //         //     // }
                 
-                //     // // sh "curl -X POST -u danilovidalm:ghp_5b5eS7kz5jYX9m9d3q3Z1hjZJgH8z7V1fB6y https://api.github.com/repos/danilovidalm/Grupo3/repos/branches/feature-1/pulls -d '{\"title\": \"pull request desde rama feature-1 a main\", \"head\": \"feature-1\", \"base\": \"main\"}'"
-                //     // //https://github.com/DevOps-Corfo-2022-Seccion1-DV/ms-iclab/compare/main...DevOps-Corfo-2022-Seccion1-DV:ms-iclab:feature-prueba?expand=1
-                //     // sh "curl -o - -s -w \"\n%{http_code}\n\" -X PUT -d '{\"commit_title\": \"Merge pull request\"}'  https://github.ibm.com/api/v3/repos/****/****/pulls/$CHANGE_ID/merge?access_token=$JENKINSBOT_PSW | tail -1 > mergeResult.txt"
+        //         //     // // sh "curl -X POST -u danilovidalm:ghp_5b5eS7kz5jYX9m9d3q3Z1hjZJgH8z7V1fB6y https://api.github.com/repos/danilovidalm/Grupo3/repos/branches/feature-1/pulls -d '{\"title\": \"pull request desde rama feature-1 a main\", \"head\": \"feature-1\", \"base\": \"main\"}'"
+        //         //     // //https://github.com/DevOps-Corfo-2022-Seccion1-DV/ms-iclab/compare/main...DevOps-Corfo-2022-Seccion1-DV:ms-iclab:feature-prueba?expand=1
+        //         //     // sh "curl -o - -s -w \"\n%{http_code}\n\" -X PUT -d '{\"commit_title\": \"Merge pull request\"}'  https://github.ibm.com/api/v3/repos/****/****/pulls/$CHANGE_ID/merge?access_token=$JENKINSBOT_PSW | tail -1 > mergeResult.txt"
 
-                //     // def mergeResult = readFile('mergeResult.txt').trim()
-                //     // if (mergeResult != "200") {
-                //     //     error "Unable to merge!"
-                //     // } else {
-                //     //     // Send a Slack message, etc
-                //     // }
+        //         //     // def mergeResult = readFile('mergeResult.txt').trim()
+        //         //     // if (mergeResult != "200") {
+        //         //     //     error "Unable to merge!"
+        //         //     // } else {
+        //         //     //     // Send a Slack message, etc
+        //         //     // }
                 
-                // }
-            }
-        }
+        //         // }
+        //     }
+        // }
     }
 }
