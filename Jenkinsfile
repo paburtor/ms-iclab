@@ -62,14 +62,16 @@ pipeline {
                     {                        
                         echo "Commit Patch -> ($comment)"
                         
+                        sh(script: 'git request-pull https://github.com/paburtor/ms-iclab.git main', returnStdout: true)                         
+                        
                         echo "Haciendo checkout a main"
-                        sh(script: 'git checkout main',  returnStdout: true)
+                        //sh(script: 'git checkout main',  returnStdout: true)
                         
                         echo "Haciendo merge hacia main"
-                        sh(script: 'git merge feature-estado-pais', returnStdout: true)
+                        //sh(script: 'git merge feature-estado-pais', returnStdout: true)
                         
                         echo "Haciendo push"
-                        sh(script: 'git push', returnStdout: true)                        
+                        //sh(script: 'git push', returnStdout: true)                        
                         
                         //sh(script: 'git push --set-upstream origin main', returnStdout: true)
                         //merge=sh(script: 'git merge main', returnStdout: true)                        
