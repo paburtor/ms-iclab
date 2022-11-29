@@ -111,7 +111,9 @@ pipeline {
         //hacer push en rama feature
 
         stage('lasttagnexus'){
-            
+            environment {
+                GIT_AUTH = credentials('token-danilo')
+            }
             when { anyOf { branch 'feature-*'; branch 'main' } }
             steps {
                 script {
@@ -143,7 +145,18 @@ pipeline {
                     echo "lasttag: "+lasttag
                     //crear nuevo tag en repo
                     sh "git tag -a v"+lasttag+" -m 'v"+lasttag+"'"
+                    sh "git config --global user.email 'danilovidalm@gmail.com'"
+                    sh "git config --global user.name 'Jenkins'"
+                    sh ('''
+                        git config --local credential.helper "!f() { echo username=\\$GIT_AUTH_USR; echo password=\\$GIT_AUTH_PSW; }; f"
+                        git push --tags
+                    ''')
+                    // git push origin HEAD:$TARGET_BRANCH
+                    // sshagent(credentials: ['token-danilo']){
+                    //     sh "git remote get-url --all origin"
+                    //     sh "git push origin --tags"
 
+                    // }
                     // sh "git push origin v"+lasttag
                     //enviar tag a nexus
                     // nexusUpload(
@@ -170,13 +183,7 @@ pipeline {
                     //     // sh("git tag -a some_tag -m 'Jenkins'")
 
                     // }
-                    sshagent(credentials: ['token-danilo']){
-                        // sh "git config --global user.email 'danilovidalm@gmail.com'"
-                        // sh "git config --global user.name 'Jenkins'"
-                        sh "git remote get-url --all origin"
-                        sh "git push origin --tags"
 
-                    }
                     // //push tag
                     // sh "git push origin v"+lasttag
 
