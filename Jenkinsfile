@@ -9,7 +9,7 @@ pipeline {
     options { skipDefaultCheckout() } 
     
     stages {              
-        stage('Checkout SCM ')
+        stage('Checkout SCM  ')
         {
             steps{
                 cleanWs()
