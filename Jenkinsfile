@@ -184,9 +184,6 @@ pipeline {
 
                     // }
 
-                    // //push tag
-                    // sh "git push origin v"+lasttag
-
                     // sh "git push origin v"+lasttag
                     //actualizar version en pom.xml
                     // sh "mvn versions:set -DnewVersion="+lasttag+" -DgenerateBackupPoms=false"
