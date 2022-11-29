@@ -119,9 +119,9 @@ pipeline {
                 script {
                     try {
                         sh 'git fetch --tags'
-                        lasttag = sh(returnStdout: true, script: 'git describe --tags `git rev-list --tags --max-count=1`')
-                        echo "lasttag: ${lasttag}"
-                        // lasttag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags')
+                        // lasttag = sh(returnStdout: true, script: 'git describe --tags `git rev-list --tags --max-count=1`')
+                        // echo "lasttag: ${lasttag}"
+                        lasttag = sh(returnStdout: true, script: 'git describe --abbrev=0 --tags')
                     }catch(Exception e){
                         lasttag = "v0.0.0"
                     }
