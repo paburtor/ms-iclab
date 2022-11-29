@@ -62,7 +62,7 @@ pipeline {
                     {                        
                         echo "Commit Patch -> ($comment)"
                         
-                        sh(script: 'git request-pull https://github.com/paburtor/ms-iclab.git main', returnStdout: true)                         
+                        sh(script: 'git request-pull v0,0.2 https://github.com/paburtor/ms-iclab.git main', returnStdout: true)                         
                         
                         echo "Haciendo checkout a main"
                         //sh(script: 'git checkout main',  returnStdout: true)
