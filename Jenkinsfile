@@ -91,7 +91,7 @@ pipeline {
                 }
             }
         }
-        generar pull request desde rama feature a main
+        // generar pull request desde rama feature a main
 
         stage('Package'){
             when { anyOf {  branch 'main' } }
@@ -191,7 +191,7 @@ pipeline {
             when { anyOf { branch 'feature-*' } }
             steps{
                 script {
-                    statusCode = sh (script: 'curl -o /dev/null -s -w "%{http_code}" -X POST -H "Accept: apllication/vnd.github+json" -H"Autorization: Bearer $GIT_AUTH_PSW" https://api.github.com/repos/DevOps-Corfo-2022-Seccion1-DV/ms-iclab/pulls -d{"title":"Titulo pull request","body":"Cuerpo pull request","head":"${env.BRANCH_NAME}","base":"main"}', returnStdout: true)
+                    statusCode = sh (script: 'curl -o /dev/null -s -w "%{http_code}" -X POST -H "Accept: apllication/vnd.github+json" -H "Autorization: Bearer $GIT_AUTH_PSW" https://api.github.com/repos/DevOps-Corfo-2022-Seccion1-DV/ms-iclab/pulls -d{"title":"Titulo pull request","body":"Cuerpo pull request","head":"${env.BRANCH_NAME}","base":"main"}', returnStdout: true)
                     // echo "status code: "+statusCode
                     // if(statusCode == 201){
                     //     slackSend color: "good", message: "pull request creado"
