@@ -8,7 +8,7 @@ pipeline {
         maven 'maven'
     }
     environment{
-        
+        GIT_AUTH = credentials('token-danilo')
         commitId = sh(returnStdout: true, script: 'git rev-parse HEAD')
         commitcheck = sh(returnStdout: true, script: '[ "$CHANGE_BRANCH" = "" ] || git rev-parse origin/$CHANGE_BRANCH')
         result = sh(returnStdout: true, script: 'git log --format=%B HEAD -n1')
@@ -23,98 +23,98 @@ pipeline {
     //[Grupo2][Pipeline IC/CD][Rama: develop][Stage: build][Resultado: Éxito/Success].
     //[Grupo2][Pipeline IC/CD][Rama: re-v1-0-0][Stage: test][Resultado: Error/Fail].
     stages {
-        stage('Checkout') {
-            steps {
-                cleanWs()
-                checkout scm
-            }
-            // checkout scm
-        }
-        stage("Env Variables") {
-            steps {
+        // stage('Checkout') {
+        //     steps {
+        //         cleanWs()
+        //         checkout scm
+        //     }
+        //     // checkout scm
+        // }
+        // stage("Env Variables") {
+        //     steps {
                 
-                sh "printenv"
-                script {
-                    if(env.BRANCH_NAME == 'main'){
-                        pipelineType = "Pipeline CD"
-                    }else{
-                        pipelineType = "Pipeline CI"
-                    }
-                }
-            }
-        }
-        stage("Build"){
-            when { anyOf { branch 'feature-*'; branch 'main' } }
-            steps {
-                // sh './mvnw clean compile -e'
-                slackSend color: "good", message: "Building.. branch: "+env.BRANCH_NAME
-            }
-            post{
-                success{
-                    slackSend color: "good", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success"
-                }
-                failure {
-                    slackSend color: "danger", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Fail"
-                }
-            }
-        }
-        stage('Test') {
-            when { anyOf { branch 'feature-*'; branch 'main' } }
-            steps {
-                // sh './mvnw test -e'
-                slackSend color: "good", message: "Testing.. branch: "+env.BRANCH_NAME
-            }
-            post{
-                success{
-                    slackSend color: "good", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success"
-                }
-                failure {
-                    slackSend color: "danger", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Fail"
-                }
-            }
-        }
-        stage('SonarQube') {
-            when { anyOf { branch 'feature-*'; branch 'main' } }
-            steps {
-                // sh './mvnw sonar:sonar -e'
-                slackSend color: "good", message: "SonarQube.. branch: "+env.BRANCH_NAME
-                withSonarQubeEnv('sonar-public') { // If you have configured more than one global server connection, you can specify its name
-                    sh './mvnw clean package sonar:sonar'
-                }
-            }
-            post{
-                success{
-                    slackSend color: "good", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success"
-                }
-                failure {
-                    slackSend color: "danger", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Fail"
-                }
-            }
-        }
-        // generar pull request desde rama feature a main
+        //         sh "printenv"
+        //         script {
+        //             if(env.BRANCH_NAME == 'main'){
+        //                 pipelineType = "Pipeline CD"
+        //             }else{
+        //                 pipelineType = "Pipeline CI"
+        //             }
+        //         }
+        //     }
+        // }
+        // stage("Build"){
+        //     when { anyOf { branch 'feature-*'; branch 'main' } }
+        //     steps {
+        //         // sh './mvnw clean compile -e'
+        //         slackSend color: "good", message: "Building.. branch: "+env.BRANCH_NAME
+        //     }
+        //     post{
+        //         success{
+        //             slackSend color: "good", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success"
+        //         }
+        //         failure {
+        //             slackSend color: "danger", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Fail"
+        //         }
+        //     }
+        // }
+        // stage('Test') {
+        //     when { anyOf { branch 'feature-*'; branch 'main' } }
+        //     steps {
+        //         // sh './mvnw test -e'
+        //         slackSend color: "good", message: "Testing.. branch: "+env.BRANCH_NAME
+        //     }
+        //     post{
+        //         success{
+        //             slackSend color: "good", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success"
+        //         }
+        //         failure {
+        //             slackSend color: "danger", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Fail"
+        //         }
+        //     }
+        // }
+        // stage('SonarQube') {
+        //     when { anyOf { branch 'feature-*'; branch 'main' } }
+        //     steps {
+        //         // sh './mvnw sonar:sonar -e'
+        //         slackSend color: "good", message: "SonarQube.. branch: "+env.BRANCH_NAME
+        //         withSonarQubeEnv('sonar-public') { // If you have configured more than one global server connection, you can specify its name
+        //             sh './mvnw clean package sonar:sonar'
+        //         }
+        //     }
+        //     post{
+        //         success{
+        //             slackSend color: "good", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success"
+        //         }
+        //         failure {
+        //             slackSend color: "danger", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Fail"
+        //         }
+        //     }
+        // }
+        // // generar pull request desde rama feature a main
 
-        stage('Package'){
-            when { anyOf {  branch 'main' } }
-            steps {
-                // sh './mvnw package -e'
-                slackSend color: "good", message: "Packaging.. branch: "+env.BRANCH_NAME
-            }
-            post{
-                success{
-                    slackSend color: "good", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success"
-                }
-                failure {
-                    slackSend color: "danger", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Fail"
-                }
-            }
-        }
+        // stage('Package'){
+        //     when { anyOf {  branch 'main' } }
+        //     steps {
+        //         // sh './mvnw package -e'
+        //         slackSend color: "good", message: "Packaging.. branch: "+env.BRANCH_NAME
+        //     }
+        //     post{
+        //         success{
+        //             slackSend color: "good", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Success"
+        //         }
+        //         failure {
+        //             slackSend color: "danger", message: "Grupo 3 - " + pipelineType + " - Rama : " + env.BRANCH_NAME + " - Stage : " + env.STAGE_NAME + " - Fail"
+        //         }
+        //     }
+        // }
 
         //hacer push en rama feature
 
         stage('lasttagnexus'){
-            environment {
-                GIT_AUTH = credentials('token-danilo')
-            }
+            // environment {
+            //     GIT_AUTH = credentials('token-danilo')
+            // }
             when { anyOf { branch 'feature-*' } }
             steps {
                 script {
