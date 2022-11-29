@@ -63,7 +63,7 @@ pipeline {
                     if(comment.startsWith('patch:') || comment.startsWith('patch :')) 
                     {
                         //comment='"' + comment + '"'
-                        echo "Commit Patch -> ("$comment")"
+                        //echo "Commit Patch -> ("$comment")"
                         echo "Haciendo pull request"
                         
                         myjson='{"title":"{title}","body":"{body}","head":"{branch}","base":"main"}'
