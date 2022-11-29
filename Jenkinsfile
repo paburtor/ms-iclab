@@ -203,6 +203,11 @@ pipeline {
             }
 
         }
+        stage('limpiar workspace'){
+            steps {
+                cleanWs()
+            }
+        }
 
     }
 }
