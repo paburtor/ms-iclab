@@ -185,9 +185,9 @@ pipeline {
         }
 
         stage('pull request rama feature-*'){
-            environment {
-                GIT_AUTH = credentials('token-danilo')
-            }
+            // environment {
+            //     GIT_AUTH = credentials('token-danilo')
+            // }
             when { anyOf { branch 'feature-*' } }
             steps{
                 script {
